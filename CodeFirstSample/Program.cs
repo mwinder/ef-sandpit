@@ -10,12 +10,12 @@ namespace CodeFirstSample
             using (var db = new BloggingContext())
             {
                 // Create and save a new Blog 
-                Console.Write("Enter a name for a new Blog: ");
-                var name = Console.ReadLine();
+                //Console.Write("Enter a name for a new Blog: ");
+                //var name = Console.ReadLine();
 
-                var blog = new Blog { Name = name };
-                db.Blogs.Add(blog);
-                db.SaveChanges();
+                //var blog = new Blog { Name = name };
+                //db.Blogs.Add(blog);
+                //db.SaveChanges();
 
                 // Display all Blogs from the database 
                 var query = from b in db.Blogs
@@ -23,9 +23,13 @@ namespace CodeFirstSample
                             select b;
 
                 Console.WriteLine("All blogs in the database:");
-                foreach (var item in query)
+                foreach (var item in query.ToList())
                 {
                     Console.WriteLine(item.Name);
+                    foreach (var post in item.Posts)
+                    {
+                        Console.WriteLine($" - Post: {post.Title}");
+                    }
                 }
 
                 Console.WriteLine("Press any key to exit...");
