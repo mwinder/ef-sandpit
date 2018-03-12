@@ -1,10 +1,18 @@
-﻿using System.Data.Entity;
+﻿using Blogging;
+using System.Data.Entity;
 
 namespace CodeFirstSample
 {
     public class BloggingContext : DbContext
     {
-        public DbSet<Blog> Blogs { get; set; }
-        public DbSet<Post> Posts { get; set; }
+        protected override void OnModelCreating(DbModelBuilder model)
+        {
+            model.Entity<Blog>()
+                .HasMany(b => b.Posts)
+                .WithRequired()
+                .HasForeignKey(p => p.BlogId);
+
+            model.Entity<Post>();
+        }
     }
 }

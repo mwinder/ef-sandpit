@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Data.Entity;
+using Blogging;
 
 namespace CodeFirstSample
 {
@@ -10,26 +12,34 @@ namespace CodeFirstSample
             using (var db = new BloggingContext())
             {
                 // Create and save a new Blog 
-                Console.Write("Enter a name for a new Blog: ");
-                var name = Console.ReadLine();
+                //Console.Write("Enter a name for a new Blog: ");
+                //var name = Console.ReadLine();
 
-                var blog = new Blog { Name = name };
-                db.Blogs.Add(blog);
-                db.SaveChanges();
+                //var blog = new Blog(name);
+                //db.Set<Blog>().Add(blog);
+                //db.SaveChanges();
 
-                // Display all Blogs from the database 
-                var query = from b in db.Blogs
-                            orderby b.Name
-                            select b;
+                //Display all Blogs from the database
+                //var query = from b in db.Set<Blog>()//.Include(x => x.Posts)
+                //            orderby b.Name
+                //            select b;
 
                 Console.WriteLine("All blogs in the database:");
-                foreach (var item in query)
+                foreach (var item in db.Set<Blog>())
                 {
                     Console.WriteLine(item.Name);
+                    foreach (var post in item.Posts)
+                    {
+                        Console.WriteLine($" - Post: {post.Title}");
+                    }
                 }
 
-                Console.WriteLine("Press any key to exit...");
-                Console.ReadKey();
+                //var ret = db.Set<Blog>().Find(1);
+                //ret.Posts.Add(new Post("Hello world!", "This is my first post"));
+                //db.SaveChanges();
+
+                //Console.WriteLine("Press any key to exit...");
+                //Console.ReadKey();
             }
         }
     }
