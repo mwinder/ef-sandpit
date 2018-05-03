@@ -13,12 +13,12 @@ namespace Blogging
         public int Id { get; private set; }
         public string Name { get; private set; }
 
-        internal virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>();
+        protected internal virtual ICollection<Post> Posts { get; set; } = new HashSet<Post>();
     }
 
     public class Post
     {
-        private Post() { } // EF
+        protected Post() { } // EF
         public Post(string title, string content)
         {
             Title = title;
@@ -26,7 +26,7 @@ namespace Blogging
         }
 
         public int Id { get; set; }
-        public int BlogId { get; set; }
+        protected internal int BlogId { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
     }
